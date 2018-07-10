@@ -1,0 +1,25 @@
+server:
+  port: 8003
+spring:
+  application:
+    name: microservice-zuul
+eureka:
+  client:
+    service-url:
+       defaultZone: http://localhost:8761/eureka/
+  instance: 
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+zuul:  
+  host:  
+    socket-timeout-millis: 60000 
+    connect-timeout-millis: 60000
+  routes:
+    user: 
+      path: /person/**
+      serviceId: microservice-user
+      strip-prefix: true
+    movice: 
+      path: /movice/**
+      serviceId: microservice-movie
+      
